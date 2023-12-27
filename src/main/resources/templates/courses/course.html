@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pure CSS Responsive Table || Learningrobo</title>
+    <link rel="stylesheet" href="./style.css">
+
+
+    <style>
+        body {
+            height: 100vh;
+            background-color: #4158D0;
+            background-image: linear-gradient(43deg, #364242 0%, #174949 46%, #113636 100%);
+        }
+
+        table {
+            width: 850px;
+            border-collapse: collapse;
+            margin: 50px auto;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            border-radius: 12px;
+
+        }
+
+        th {
+            background: #152147;
+            color: white;
+            font-weight: bold;
+            border-bottom: 2px solid #4158D0;
+        }
+
+        td, th {
+            padding: 30px 10px;
+            text-align: left;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        td {
+            background-color: #12192c;
+            color: #fff;
+        }
+
+        @media only screen and (max-width: 760px),
+        (min-device-width: 768px) and (max-device-width: 1024px) {
+
+            table {
+                width: 100%;
+            }
+
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                border: 1px solid #ccc;
+            }
+
+            td {
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50%;
+
+            }
+
+            td:before {
+                position: absolute;
+                top: 6px;
+                left: 6px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                content: attr(data-column);
+                color: #000;
+                font-weight: bold;
+            }
+
+        }
+
+        .credit a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 800;
+        }
+
+        .credit {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+
+        .custom-btn {
+            width: 130px;
+            height: 40px;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px 25px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-block;
+            box-shadow: inset 2px 2px 2px 0px rgba(255, 255, 255, .5),
+            7px 7px 20px 0px rgba(0, 0, 0, .1),
+            4px 4px 5px 0px rgba(0, 0, 0, .1);
+            outline: none;
+        }
+
+        /* 3 */
+        .btn-3 {
+            background: rgb(0, 172, 238);
+            background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%);
+            width: 130px;
+            height: 40px;
+            line-height: 42px;
+            padding: 0;
+            border: none;
+
+        }
+
+        .btn-3 span {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn-3:before,
+        .btn-3:after {
+            position: absolute;
+            content: "";
+            right: 0;
+            top: 0;
+            background: rgba(2, 126, 251, 1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-3:before {
+            height: 0%;
+            width: 2px;
+        }
+
+        .btn-3:after {
+            width: 0%;
+            height: 2px;
+        }
+
+        .btn-3:hover {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .btn-3:hover:before {
+            height: 100%;
+        }
+
+        .btn-3:hover:after {
+            width: 100%;
+        }
+
+        .btn-3 span:hover {
+            color: rgba(2, 126, 251, 1);
+        }
+
+        .btn-3 span:before,
+        .btn-3 span:after {
+            position: absolute;
+            content: "";
+            left: 0;
+            bottom: 0;
+            background: rgba(2, 126, 251, 1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-3 span:before {
+            width: 2px;
+            height: 0%;
+        }
+
+        .btn-3 span:after {
+            width: 0%;
+            height: 2px;
+        }
+
+        .btn-3 span:hover:before {
+            height: 100%;
+        }
+
+        .btn-3 span:hover:after {
+            width: 100%;
+        }
+
+        /* 4 */
+
+
+        Resources
+
+    </style>
+
+</head>
+
+<body>
+<table>
+    <table style="width:60%">
+
+        <th scope="col">#</th>
+        <th scope="col">Course Name</th>
+        <th scope="col">Duration Month</th>
+        <th scope="col">update</th>
+        <th sec:authorize="hasAuthority('ADMIN')" scope="col">delete</th>
+        <tr>
+
+        </tr>
+
+        <tr th:each="course:${courses}">
+
+            <td th:text="${course.id}"></td>
+            <td th:text="${course.courseName}"></td>
+            <td th:text="${course.durationMonth}"></td>
+
+            <td>
+                <a th:href="@{/courses/update/{id}(id=${course.id})}">
+                    <button style="height: auto; background-color: bisque">update</button>
+                </a>
+            </td>
+            <td>
+                <form sec:authorize="hasAuthority('ADMIN')" th:method="Get"
+                      th:action="@{/courses/delete/{id}(id=${course.id})}">
+                    <button type="submit " style="height:auto; background-color: red">delete</button>
+                </form>
+            </td>
+        </tr>
+
+
+    </table>
+</table>
+
+<button style="margin: auto;display: block" class="custom-btn btn-3"
+        value="Add Course" onclick="window.location.href = 'courses/addCourse'"><span>Add Course</span></button>
+<br>
+
+<button style="margin: auto;display: block" class="custom-btn btn-3"
+        value="Home" onclick="window.location.href = '/'"><span>Home</span></button>
+
+
+</body>
+</html>
